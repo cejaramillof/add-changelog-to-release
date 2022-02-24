@@ -17,7 +17,6 @@ module.exports = class Api {
     this._repo = repo
     this._org = org
     this._base = org ? 'orgs' : 'repos'
-    // this._base = 'repos'
   }
 
   /**
@@ -29,9 +28,8 @@ module.exports = class Api {
   async getReleaseByTag(tag) {
     const {
       data: { id: releaseId, body: releaseBody }
-    } = await this.octokit.request('GET /:base/:owner/:repo/releases/tags/:tag', {
+    } = await this.octokit.request('GET /:base/:repo/releases/tags/:tag', {
       base: this._base,
-      owner: this._owner,
       repo: this._repo,
       tag: tag
     })
@@ -48,9 +46,8 @@ module.exports = class Api {
    * @returns {Promise<{data: object}>} - Fetch response
    */
   async updateRelease(release_id, name, body) {
-    return await this.octokit.request('PATCH /:base/:owner/:repo/releases/:release_id', {
+    return await this.octokit.request('PATCH /:base/:repo/releases/:release_id', {
       base: this._base,
-      owner: this._owner,
       repo: this._repo,
       release_id: release_id,
       name: name,
@@ -69,10 +66,9 @@ module.exports = class Api {
     const {
       data: { name, body }
     } = await this.octokit.request(
-      'POST /:base/:owner/:repo/releases/generate-notes',
+      'POST /:base/:repo/releases/generate-notes',
       {
         base: this._base,
-        owner: this._owner,
         repo: this._repo,
         tag_name: tag_name
       }
