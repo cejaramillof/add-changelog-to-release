@@ -1,0 +1,30 @@
+name: 'Add Changelog to Release'
+
+author: Carlos Jaramillo
+
+description: 'Add the changelog to the release from current tag'
+
+branding:
+  icon: lock
+  color: gray-dark
+
+inputs:
+  repository:
+    description: Repository name
+    default: ${{ github.repository }}
+    required: false
+
+  token:
+    description: Repository access token
+    required: true
+
+outputs:
+  code:
+    description: Status code
+
+  data:
+    description: Response data
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
